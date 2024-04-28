@@ -1,6 +1,6 @@
 {
   "name": "@tgthuan/utils",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
@@ -24,19 +24,20 @@
     "@rollup/plugin-typescript": "^11.1.6",
     "@types/lodash": "^4.17.0",
     "@types/react": "^18.3.1",
+    "clsx": "^2.1.1",
+    "dayjs": "^1.11.10",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "lodash": "^4.17.21",
     "rollup": "^4.17.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
+    "tailwind-merge": "^2.3.0",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
     "typescript": "^5.4.5"
   },
   "peerDependencies": {
-    "react": "^18.3.1",
-    "react-dom": "^18.3.1",
-    "clsx": "^2.1.1",
-    "dayjs": "^1.11.10",
-    "lodash": "^4.17.21",
-    "tailwind-merge": "^2.3.0"
+    "react": ">=18"
   }
 }
