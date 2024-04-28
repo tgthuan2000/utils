@@ -7,6 +7,8 @@ import peerDepsExternal from "rollup-plugin-peer-deps-external";
 
 const packageJson = require("./package.json");
 
+const isDevMode = process.env.NODE_ENV !== "production";
+
 export default [
   {
     input: "src/index.ts",
@@ -14,12 +16,12 @@ export default [
       {
         file: packageJson.main,
         format: "cjs",
-        sourcemap: true,
+        sourcemap: isDevMode,
       },
       {
         file: packageJson.module,
         format: "esm",
-        sourcemap: true,
+        sourcemap: isDevMode,
       },
     ],
     plugins: [
