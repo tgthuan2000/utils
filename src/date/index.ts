@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-
 import 'dayjs/locale/vi';
 import arraySupport from 'dayjs/plugin/arraySupport';
 import customParseFormat from 'dayjs/plugin/customParseFormat';

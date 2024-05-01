@@ -1,26 +1,49 @@
-import resolve from "@rollup/plugin-node-resolve";
-import commonjs from "@rollup/plugin-commonjs";
-import typescript from "@rollup/plugin-typescript";
-import dts from "rollup-plugin-dts";
-import terser from "@rollup/plugin-terser";
-import peerDepsExternal from "rollup-plugin-peer-deps-external";
+import commonjs from '@rollup/plugin-commonjs';
+import resolve from '@rollup/plugin-node-resolve';
+import terser from '@rollup/plugin-terser';
+import typescript from '@rollup/plugin-typescript';
+import { readdirSync } from 'fs';
+import { join } from 'path';
+import dts from 'rollup-plugin-dts';
+import peerDepsExternal from 'rollup-plugin-peer-deps-external';
 
-const packageJson = require("./package.json");
+const packageJson = require('./package.json');
 
-const isDevMode = process.env.NODE_ENV !== "production";
+const isDevMode = process.env.NODE_ENV !== 'production';
+
+const getSrcFolderInput = (folderPath = 'src') => {
+  const folderInput = {};
+
+  const folderContents = readdirSync(folderPath, { withFileTypes: true });
+
+  folderContents.forEach((item) => {
+    if (item.isDirectory()) {
+      const subFolderName = item.name;
+      const inputKey = `${subFolderName}/index`;
+      folderInput[inputKey] = join(folderPath, subFolderName, 'index.ts');
+    }
+  });
+
+  return folderInput;
+};
+
+const inputFolders = getSrcFolderInput();
 
 export default [
   {
-    input: "src/index.ts",
+    input: {
+      index: 'src/index.ts',
+      ...inputFolders,
+    },
     output: [
       {
-        file: packageJson.main,
-        format: "cjs",
+        dir: 'dist/esm',
+        format: 'es',
         sourcemap: isDevMode,
       },
       {
-        file: packageJson.module,
-        format: "esm",
+        dir: 'dist/cjs',
+        format: 'cjs',
         sourcemap: isDevMode,
       },
     ],
@@ -28,14 +51,26 @@ export default [
       peerDepsExternal(),
       resolve(),
       commonjs(),
-      typescript({ tsconfig: "./tsconfig.json" }),
+      typescript({ tsconfig: './tsconfig.json' }),
       terser(),
     ],
-    external: ["react", "react-dom"],
+    external: ['react', 'react-dom'],
   },
   {
-    input: "src/index.ts",
-    output: [{ file: "dist/index.d.ts", format: "es" }],
+    input: {
+      index: 'src/index.ts',
+      ...inputFolders,
+    },
+    output: [
+      {
+        dir: 'dist/esm',
+        format: 'es',
+      },
+      {
+        dir: 'dist/cjs',
+        format: 'cjs',
+      },
+    ],
     plugins: [dts.default()],
   },
 ];

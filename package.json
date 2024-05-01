@@ -4,12 +4,45 @@
   "description": "",
   "main": "dist/cjs/index.js",
   "module": "dist/esm/index.js",
-  "types": "dist/index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/esm/index.js",
+      "require": "./dist/cjs/index.js"
+    },
+    "./text": {
+      "import": "./dist/esm/text/index.js",
+      "require": "./dist/cjs/text/index.js"
+    },
+    "./color": {
+      "import": "./dist/esm/color/index.js",
+      "require": "./dist/cjs/color/index.js"
+    },
+    "./number": {
+      "import": "./dist/esm/number/index.js",
+      "require": "./dist/cjs/number/index.js"
+    },
+    "./component": {
+      "import": "./dist/esm/component/index.js",
+      "require": "./dist/cjs/component/index.js"
+    },
+    "./date": {
+      "import": "./dist/esm/date/index.js",
+      "require": "./dist/cjs/date/index.js"
+    },
+    "./json": {
+      "import": "./dist/esm/json/index.js",
+      "require": "./dist/cjs/json/index.js"
+    }
+  },
   "files": [
     "dist"
   ],
   "scripts": {
-    "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs"
+    "build": "rm -rf ./dist && rollup -c --bundleConfigAsCjs",
+    "prettier": "prettier --write .",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix",
+    "build:prepare": "npm run lint:fix && npm run prettier && npm run build"
   },
   "author": "TGThuan",
   "license": "MIT",
@@ -18,6 +51,7 @@
     "url": "https://github.com/tgthuan2000/utils"
   },
   "devDependencies": {
+    "@eslint/js": "^9.1.1",
     "@rollup/plugin-commonjs": "^25.0.7",
     "@rollup/plugin-node-resolve": "^15.2.3",
     "@rollup/plugin-terser": "^0.4.4",
@@ -26,16 +60,20 @@
     "@types/react": "^18.3.1",
     "clsx": "^2.1.1",
     "dayjs": "^1.11.10",
+    "eslint": "^9.1.1",
+    "globals": "^15.1.0",
+    "lodash": "^4.17.21",
+    "prettier": "^3.2.5",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "lodash": "^4.17.21",
     "rollup": "^4.17.0",
     "rollup-plugin-dts": "^6.1.0",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "tailwind-merge": "^2.3.0",
     "ts-node": "^10.9.2",
     "tslib": "^2.6.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.4.5",
+    "typescript-eslint": "^7.8.0"
   },
   "peerDependencies": {
     "react": ">=18"
